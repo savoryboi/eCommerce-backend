@@ -1,23 +1,21 @@
 const router = require('express').Router();
+const { response } = require('express');
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
 router.get('/', (req, res) => {
-  Category.findAll({
-    include: Product
-  })
+  Category.findAll()
     .then(data => {
       res.json(data)
     })
-  // find all categories
-  // be sure to include its associated Products
+
 });
 
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
-  Category.findOne({id: req.params.id})
+  Category.findOne({where: {id: req.params.id}})
     .then(data => {
       res.json(data)
     })
@@ -25,9 +23,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
-  Category.create({
-    catergory_name: req.body.catergory_name
-  })
+  Category.create(req.body)
   .then(new_category => {
     res.json(new_category)
   })
@@ -42,6 +38,9 @@ router.put('/:id', (req, res) => {
       where: {id: req.params.id}
     }
     )
+    .then(update => {
+      res.send('updated category w specified id')
+    })
 });
 
 router.delete('/:id', (req, res) => {
@@ -49,6 +48,7 @@ router.delete('/:id', (req, res) => {
   Category.destroy({
     where: { id: req.params.id }
   })
+  .then(() => res.send('category has been deleted'));
 });
 
 module.exports = router;
