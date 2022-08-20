@@ -22,7 +22,5 @@ ProductTag.init(
   }
 );
 
-ProductTag.hasMany(Product)
-Product.belongsTo(ProductTag)
 
 module.exports = ProductTag;

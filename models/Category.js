@@ -12,10 +12,6 @@ Category.init(
     category_name: {
       type: DataTypes.STRING, 
       allowNull: false
-    }, 
-    products: {
-      type: DataTypes.ARRAY, 
-      allowNull: true
     }
   },
   {
@@ -27,7 +23,5 @@ Category.init(
   }
 );
 
-Category.hasMany(Product)
-Product.belongsTO(Category)
 
 module.exports = Category;
